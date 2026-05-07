@@ -1,17 +1,13 @@
 name: Keep Railway Alist Alive
 
 on:
-  push:
-    branches: [ main ]
   schedule:
-    - cron: '*/5 * * * *'  # 每 5 分钟访问一次
+    - cron: '*/5 * * * *'  # 每 5 分钟一次
   workflow_dispatch:
 
 jobs:
   keep-alive:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Alist Website
-        uses: lannonbr/website-uptime-monitor@master
-        with:
-          url: "https://alist-production-8dae.up.railway.app/"
+      - name: Ping Alist to prevent sleep
+        run: curl -I --max-time 10 "https://alist-production-8dae.up.railway.app"
